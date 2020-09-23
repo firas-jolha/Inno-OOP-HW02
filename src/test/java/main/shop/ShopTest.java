@@ -2,13 +2,17 @@ package main.shop;
 
 import main.clients.Consumer;
 import main.clients.Customer;
-import main.stocks.Inventory;
+import main.inventories.ExpirableInventory;
+import main.inventories.Inventory;
 import main.utils.Gender;
 import main.utils.Location;
+import main.utils.ProductCategory;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,20 +24,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ShopTest {
 
-    // Check it for junit 5
-    //https://www.petrikainulainen.net/programming/testing/junit-5-tutorial-writing-our-first-test-class/
     /**
      * Instance of Shop to test the its methods
      */
-    private final Shop shop = new Shop();
+    private static final Shop shop = new Shop();
+    private static Inventory inventory;
+    private static int inventoryAmount = 14;
 
     /**
      * An initiator for shop properties
      */
-    @BeforeEach
-    public void init() {
+    @BeforeAll
+    public static void init() {
         shop.setName("Firas");
         shop.setLocation(new Location("Kazan", 140.0, 160.0));
+        inventory = new ExpirableInventory("product",LocalDate.now(),14.3, ProductCategory.FOOD, LocalDate.now().plusMonths(6));
     }
 
     /**
@@ -78,11 +83,12 @@ class ShopTest {
      *
      */
     @RepeatedTest(4)
+    @Order(1)
     void addCustomer() {
         Customer customer = new Customer("Firas", 28, Gender.MALE);
-        Integer i = shop.getCustomersSize();
+        Integer i = shop.customers.size();
         shop.addCustomer(customer);
-        assertEquals(shop.getCustomersSize(), i+1);
+        assertEquals(shop.customers.size(), i+1);
     }
 
     /**
@@ -90,45 +96,52 @@ class ShopTest {
      *
      */
     @RepeatedTest(4)
+    @Order(2)
     void addConsumer() {
         Consumer consumer = new Consumer("Firas", 28, Gender.MALE);
-        Integer i = shop.getConsumersSize();
+        Integer i = shop.consumers.size();
         shop.addConsumer(consumer);
-        assertEquals(shop.getConsumersSize(), i+1);
+        assertEquals(shop.consumers.size(), i+1);
     }
 
-    @Test
-    @Order(1)
-    void addInventory() {
-
-    }
-
-
-    @Test
-    @Order(2)
-    void isAvailable() {
-//        shop.isAvailable()
-    }
-
-    @Test
+    @RepeatedTest(5)
     @Order(3)
-    void removeInventory() {
+    void addInventory() {
+        Number n = shop.stocks.get(1).getInventories().get(inventory);
+        int size = n==null?0:n.intValue();
+        shop.addInventory(inventory,inventoryAmount);
+        assertEquals(shop.stocks.get(1).getInventories().get(inventory).intValue(), size+inventoryAmount);
     }
 
 
     @Test
     @Order(4)
+    void isAvailable() {
+        assertEquals(shop.isAvailable(inventory,inventoryAmount),true);
+    }
+
+    @RepeatedTest(3)
+    @Order(5)
+    void removeInventory() {
+        Number n = shop.stocks.get(1).getInventories().get(inventory);
+        int size = n==null?0:n.intValue();
+        shop.removeInventory(inventory,inventoryAmount);
+        assertEquals(shop.stocks.get(1).getInventories().get(inventory).intValue(), size-inventoryAmount);
+    }
+
+
+    @Test
+    @Order(6)
     void createOrder() {
-
-        int size = shop.getOrdersSize();
-
-//        Order order = new Order(shop, LocalDate.now(),);
-//        shop.createOrder(order);
-//        assertEquals(shop.getOrdersSize(), size + 1);
+        int size = shop.orders.size();
+        shop.createOrder(inventory, inventoryAmount, shop.consumers.get(0),shop.customers.get(0));
+        assertEquals(shop.orders.size(), size+1);
     }
 
     @Test
-    @Order(5)
+    @Order(Integer.MAX_VALUE)
     void testToString() {
+        System.out.println(shop.toString());
     }
+
 }
