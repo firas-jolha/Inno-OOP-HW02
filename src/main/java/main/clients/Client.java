@@ -1,6 +1,8 @@
 package main.clients;
 
 import main.utils.Gender;
+import org.hamcrest.core.IsNull;
+
 import static org.valid4j.Assertive.*;
 
 public class Client {
@@ -12,9 +14,9 @@ public class Client {
     private final Gender gender;
 
     public Client(String name, Integer age, Gender gender) {
-        require(name!=null && !name.equals("") && age>0 && age<190,"Error Message");
         setName(name);
         setAge(age);
+        require(gender, IsNull.notNullValue());
         this.gender = gender;
     }
     public void setName(String name) {
@@ -42,9 +44,9 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", gender=" + gender +
+                "name='" + getName() + '\'' +
+                ", age=" + getAge() +
+                ", gender=" + getGender() +
                 '}';
     }
 
