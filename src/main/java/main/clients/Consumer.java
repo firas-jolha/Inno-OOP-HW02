@@ -12,10 +12,11 @@ public class Consumer extends Client {
     }
 
     public Consumer() {
-        this("Customer-" + UUID.randomUUID().toString(), 0, Gender.MALE);
+        this("Customer-" + UUID.randomUUID().toString(), 30, Gender.MALE);
     }
 
     public Order makeOrder(Order order){
         return new Order(order);
     }
+
 }

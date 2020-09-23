@@ -6,7 +6,6 @@ import main.stocks.Inventory;
 import main.stocks.Stock;
 import main.utils.Location;
 import main.utils.ProductCategory;
-import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.valid4j.Assertive;
 
@@ -19,6 +18,23 @@ public class Shop {
     private final ArrayList<Consumer> consumers = new ArrayList<>();
     private final ArrayList<Order> orders = new ArrayList<>();
     private final ArrayList<Stock> stocks = new ArrayList<>();
+    {
+        for (ProductCategory category: ProductCategory.values()){
+            stocks.add(Stock.createStock(category));
+        }
+    }
+
+    public Integer getCustomersSize(){
+        return customers.size();
+    }
+
+    public Integer getConsumersSize(){
+        return consumers.size();
+    }
+
+    public Integer getOrdersSize(){ return orders.size();}
+
+    public Integer getStocksSize(){ return stocks.size();}
 
     public String getName() {
         return name;
@@ -66,8 +82,6 @@ public class Shop {
         }
     }
 
-
-
     public boolean isAvailable(Inventory inventory, Integer amount){
         Assertive.require(inventory, IsNull.notNullValue());
         Assertive.require(amount>0);
@@ -77,5 +91,22 @@ public class Shop {
             }
         }
         return false;
+    }
+
+    public void createOrder(Order order){
+        Assertive.require(order, IsNull.notNullValue());
+        orders.add(order);
+    }
+
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                ", customers=" + customers +
+                ", consumers=" + consumers +
+                ", orders=" + orders +
+                ", stocks=" + stocks +
+                '}';
     }
 }

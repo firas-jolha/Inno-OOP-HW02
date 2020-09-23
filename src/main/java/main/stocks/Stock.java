@@ -20,6 +20,18 @@ public abstract class Stock {
         return category;
     }
 
+    public static Stock createStock(ProductCategory category){
+        for (ProductCategory cat:ProductCategory.values()){
+            if(cat.equals(category)){
+                try {// using Reflection API to create stocks according to product categories
+                    return (Stock) cat.getStockClass().getDeclaredConstructors()[0].newInstance();
+                }catch (Exception ex){
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * Checks the availability of the amount of inventory in stock
      * @param inventory the requested inventory
