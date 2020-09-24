@@ -1,6 +1,5 @@
 package main.utils;
 
-import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.valid4j.Assertive;
@@ -24,7 +23,8 @@ public class Location {
 
     /**
      * Constructor for Location
-     * @param address the address
+     *
+     * @param address      the address
      * @param coordinatesX the X coordinates of location
      * @param coordinatesY the Y coordinates of location
      */
@@ -35,6 +35,7 @@ public class Location {
 
     /**
      * Setter method for Address
+     *
      * @param address the address of location
      */
     public void setAddress(String address) {
@@ -45,6 +46,7 @@ public class Location {
 
     /**
      * Setter method for coordinates but for private usage
+     *
      * @param coordinates the coordinates of location
      */
     private void setCoordinates(Map.Entry<Double, Double> coordinates) {
@@ -53,15 +55,17 @@ public class Location {
 
     /**
      * Another setter method for coordinates for public usage
+     *
      * @param x the X coordinates of location
      * @param y the Y coordinates of location
      */
-    public void setCoordinates(Double x, Double y){
+    public void setCoordinates(Double x, Double y) {
         setCoordinates(new AbstractMap.SimpleEntry<>(x, y));
     }
 
     /**
      * Getter method for coordinates of location
+     *
      * @return the Pair of coordinates
      */
     public Map.Entry<Double, Double> getCoordinates() {
@@ -70,18 +74,25 @@ public class Location {
 
     /**
      * Getter method for X coordinates of location
+     *
      * @return the X coordinates of location
      */
-    public Double getCoordinatesX(){ return coordinates.getKey();}
+    public Double getCoordinatesX() {
+        return coordinates.getKey();
+    }
 
     /**
      * Getter method for Y coordinates of location
+     *
      * @return the Y coordinates of location
      */
-    public Double getCoordinatesY(){ return coordinates.getValue();}
+    public Double getCoordinatesY() {
+        return coordinates.getValue();
+    }
 
     /**
      * Getter method for address of location
+     *
      * @return the address of location
      */
     public String getAddress() {
@@ -91,7 +102,8 @@ public class Location {
     /**
      * Represents the Location class as a string.
      * Returns string info about the location
-     * @return
+     *
+     * @return string
      */
     @Override
     public String toString() {
