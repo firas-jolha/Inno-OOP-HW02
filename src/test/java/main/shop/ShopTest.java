@@ -99,9 +99,9 @@ class ShopTest {
     @Order(1)
     void addCustomer() {
         Customer customer = new Customer("Firas", 28, Gender.MALE);
-        int i = shop.customers.size();
+        int i = shop.getCustomersSize();
         shop.addCustomer(customer);
-        assertEquals(shop.customers.size(), i + 1);
+        assertEquals(shop.getCustomersSize(), i + 1);
     }
 
     /**
@@ -111,9 +111,9 @@ class ShopTest {
     @Order(2)
     void addConsumer() {
         Consumer consumer = new Consumer("Firas", 28, Gender.MALE);
-        int i = shop.consumers.size();
+        int i = shop.getConsumersSize();
         shop.addConsumer(consumer);
-        assertEquals(shop.consumers.size(), i + 1);
+        assertEquals(shop.getConsumersSize(), i + 1);
     }
 
     /**
@@ -122,10 +122,10 @@ class ShopTest {
     @RepeatedTest(5)
     @Order(3)
     void addInventory() {
-        Number n = shop.stocks.get(1).getInventories().get(inventory);
+        Number n = shop.getStock(1).getInventories().get(inventory);
         int size = n == null ? 0 : n.intValue();
         shop.addInventory(inventory, inventoryAmount);
-        assertEquals(shop.stocks.get(1).getInventories().get(inventory).intValue(), size + inventoryAmount);
+        assertEquals(shop.getStock(1).getInventories().get(inventory).intValue(), size + inventoryAmount);
     }
 
     /**
@@ -143,10 +143,10 @@ class ShopTest {
     @RepeatedTest(3)
     @Order(5)
     void removeInventory() {
-        Number n = shop.stocks.get(1).getInventories().get(inventory);
+        Number n = shop.getStock(1).getInventories().get(inventory);
         int size = n == null ? 0 : n.intValue();// when no inventories n will be null or zero number of inventories
         shop.removeInventory(inventory, inventoryAmount);
-        assertEquals(shop.stocks.get(1).getInventories().get(inventory).intValue(), size - inventoryAmount);
+        assertEquals(shop.getStock(1).getInventories().get(inventory).intValue(), size - inventoryAmount);
     }
 
     /**
@@ -155,9 +155,9 @@ class ShopTest {
     @Test
     @Order(6)
     void createOrder() {
-        int size = shop.orders.size();
-        shop.createOrder(inventory, inventoryAmount, shop.consumers.get(0), shop.customers.get(0));
-        assertEquals(shop.orders.size(), size + 1);
+        int size = shop.getOrdersSize();
+        shop.createOrder(inventory, inventoryAmount, shop.getConsumer(0), shop.getCustomer(0));
+        assertEquals(shop.getOrdersSize(), size + 1);
     }
 
 }
