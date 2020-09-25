@@ -1,6 +1,8 @@
 package main.inventories;
 
 import main.utils.ProductCategory;
+import main.utils.ProductSize;
+import org.hamcrest.core.IsNull;
 import org.valid4j.Assertive;
 
 import java.time.LocalDate;
@@ -14,7 +16,7 @@ public class SizableInventory extends Inventory implements ISizableInventory {
     /**
      * size of sizable inventory
      */
-    private Double size;
+    private ProductSize size;
 
     /**
      * Creates an instance of sizable inventory
@@ -25,7 +27,7 @@ public class SizableInventory extends Inventory implements ISizableInventory {
      * @param category   category of inventory
      * @param size       size of sizable inventory
      */
-    public SizableInventory(String name, LocalDate createDate, Double price, ProductCategory category, Double size) {
+    public SizableInventory(String name, LocalDate createDate, Double price, ProductCategory category, ProductSize size) {
         super(name, createDate, price, category);
         setSize(size);// calling setter of size attribute
     }
@@ -36,8 +38,8 @@ public class SizableInventory extends Inventory implements ISizableInventory {
      * @param size size of sizable Inventory
      */
     @Override
-    public void setSize(Double size) {
-        Assertive.require(size > 0.0);
+    public void setSize(ProductSize size) {
+        Assertive.require(size, IsNull.notNullValue());
         this.size = size;
     }
 
@@ -47,7 +49,7 @@ public class SizableInventory extends Inventory implements ISizableInventory {
      * @return the size of sizable inventory
      */
     @Override
-    public Double getSize() {
+    public ProductSize getSize() {
         return size;
     }
 }

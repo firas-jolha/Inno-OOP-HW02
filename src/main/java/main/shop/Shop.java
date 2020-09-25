@@ -30,22 +30,22 @@ public class Shop {
     /**
      * list of shop customers
      */
-    public final ArrayList<Customer> customers = new ArrayList<>();
+    private final ArrayList<Customer> customers = new ArrayList<>();
 
     /**
      * list of shop consumers
      */
-    public final ArrayList<Consumer> consumers = new ArrayList<>();
+    private final ArrayList<Consumer> consumers = new ArrayList<>();
 
     /**
      * list of shop orders
      */
-    public final ArrayList<Order> orders = new ArrayList<>();
+    private final ArrayList<Order> orders = new ArrayList<>();
 
     /**
      * list of shop stocks
      */
-    public final ArrayList<Stock> stocks = new ArrayList<>();
+    private final ArrayList<Stock> stocks = new ArrayList<>();
 
     // Initialization block for creating stock for each product category
     {
@@ -104,6 +104,65 @@ public class Shop {
         //Contracts
         Assertive.require(location, IsNull.notNullValue()); // location is not null
         this.location = location;
+    }
+
+    /**
+     * Get a consumer by index
+     * @return The consumer of requested index
+     */
+    public Consumer getConsumer(int index) {
+        return consumers.get(index);
+    }
+
+    /**
+     * Get a Customer by index
+     * @return The customer of requested index
+     */
+    public Customer getCustomer(int index) {
+        return customers.get(index);
+    }
+
+
+    /**
+     * Get an order by index
+     * @return The order of requested index
+     */
+    public Order getOrder(int index) {
+        return orders.get(index);
+    }
+
+    /**
+     * Returns the num of consumers
+     * @return int
+     */
+    public int getConsumersSize(){
+        return consumers.size();
+    }
+
+    /**
+     * Returns the num of customers
+     * @return int
+     */
+    public int getCustomersSize(){
+        return customers.size();
+    }
+
+    /**
+     * Returns the num of orders
+     * @return int
+     */
+    public int getOrdersSize(){
+        return orders.size();
+    }
+
+
+
+    /**
+     * Get a stock by index
+     * @return The stock of requested index
+     */
+    public Stock getStock(int index) {
+        return stocks.get(index);
     }
 
     /**
